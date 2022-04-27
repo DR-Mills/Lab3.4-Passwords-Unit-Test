@@ -1,0 +1,22 @@
+package dustin.is.learning;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class PasswordPrompt {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public static boolean isLength7to12(String str) {
+		return (str.length() >= 7 && str.length() <= 12);
+	}
+	
+	public static boolean hasNumberExcluding6(String str) {
+		Pattern numsNot6 = Pattern.compile("[0-9]");
+		Matcher match = numsNot6.matcher(str);
+		return match.find();
+	}
+}

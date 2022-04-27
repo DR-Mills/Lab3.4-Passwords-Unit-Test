@@ -1,0 +1,32 @@
+package password_tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import dustin.is.learning.*;
+
+class AllTests {
+
+	@Test
+	void passwordLength6() {
+		String test = "iamsix";
+		boolean actual = PasswordPrompt.isLength7to12(test);
+		assertFalse(actual);
+	}
+
+	@Test
+	void passwordLength8() {
+		String test = "iameight";
+		boolean actual = PasswordPrompt.isLength7to12(test);
+		assertTrue(actual);
+	}
+	
+	@Test
+	void passwordLength13() {
+		String test = "iambeyondsize";
+		boolean actual = PasswordPrompt.isLength7to12(test);
+		assertFalse(actual);
+	}
+	
+}

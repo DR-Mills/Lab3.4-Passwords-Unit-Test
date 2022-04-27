@@ -1,0 +1,14 @@
+package dustin.is.learning;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class PasswordTests {
+
+	@Test
+	void test() {
+		fail("Not yet implemented");
+	}
+
+}

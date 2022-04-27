@@ -1,0 +1,16 @@
+package dustin.is.learning;
+
+public class PasswordStorage {
+
+	private static boolean passwordHashArrayList(String str) {
+		// if hash of password doesn't exist, add it and return true
+		// otherwise false
+		return false;
+	}
+	
+	public static boolean passTheHash(String str) {
+		// allows access from outside of class (if needed?)
+		return false;
+	}
+	
+}
