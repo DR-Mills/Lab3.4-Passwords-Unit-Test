@@ -1,0 +1,57 @@
+package dustin.is.learning;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.codec.digest.DigestUtils;
+
+public class PasswordValidation {
+
+	public static boolean isPasswordValid(String str) {
+		if (isLength7to12(str) && hasNumberExcluding6(str) && !containsSpace(str) && contains2CapitalVowels(str)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isLength7to12(String str) {
+		return (str.length() >= 7 && str.length() <= 12);
+	}
+
+	public static boolean hasNumberExcluding6(String str) {
+		Pattern numsNot6 = Pattern.compile("[0-5[7-9]]");
+		Matcher match = numsNot6.matcher(str);
+		return match.find();
+	}
+
+	public static boolean hasNumberPrimeOnly(String str) {
+		// extract all numbers
+		// validate all numbers are prime
+		int extractedNumber = Integer.valueOf(str.replaceAll("[^0-9.]", ""));
+		System.out.println(extractedNumber);
+		return true;
+	}
+	
+	public static boolean containsSpace(String str) {
+		return str.contains(" ");
+	}
+
+	public static boolean contains2CapitalVowels(String str) {
+		Pattern vowels = Pattern.compile("[AEIOUY]");
+		Matcher match = vowels.matcher(str);
+		int count = 0;
+		while (match.find()) {
+			count++;
+		}
+		return (count >= 2) ? true : false;
+	}
+
+	public static boolean isABadSecurityException(String str) {
+		return (str.equals("admin") || str.equals("mod"));
+	}
+
+	public static String hashesPassword(String str) {
+		final String hashed = DigestUtils.sha256Hex(str);
+		System.out.println(hashed);
+		return hashed;
+	}
+}
