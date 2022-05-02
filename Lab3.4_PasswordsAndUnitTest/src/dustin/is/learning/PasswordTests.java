@@ -1,19 +1,42 @@
 package dustin.is.learning;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.util.function.Supplier;
-import org.junit.runner.RunWith;
-import org.junit.runner.Runner;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 
 
 class PasswordTests {
-@Mock
-Calendar blah;
+	
+	//ArrayList Changed
+	@Test
+	void arrayListChanged() {
+		boolean instance1 = PasswordStorage.wasHashStoredSuccessfully("dd4599fce4cc5120366aead85f79b7c9c3ba2de414881f08d9a805f39dcfa33e");
+		boolean instance2 = PasswordStorage.wasHashStoredSuccessfully("ecb16108b9da4a65a72113cc1d0a520edc441a64354cfc3dfd2d5870b50eb9cb");
+		int actualLength = PasswordStorage.passwordHashList.size();
+		assertEquals(2, actualLength);
+	}
+	
+	//True Boolean Returned
+	@Test
+	void passwordStoredSuccessfully() {
+		boolean actual = PasswordStorage.wasHashStoredSuccessfully("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz123456789012");
+		assertEquals(true, actual);
+	}
+	
+	//Password Doesn't Already Exist
+	@Test
+	void passwordDoesntAlreadyExist() {
+		boolean actual = PasswordStorage.wasHashStoredSuccessfully("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz123456789009");
+		assertEquals(true, actual);
+	}
+
+	//Password Already Exist
+	@Test
+	void passwordExists() {
+		boolean instance1 = PasswordStorage.wasHashStoredSuccessfully("dd4599fce4cc5120366aead85f79b7c9c3ba2de414881f08d9a805f39dcfa33e");
+		boolean actual = PasswordStorage.wasHashStoredSuccessfully("dd4599fce4cc5120366aead85f79b7c9c3ba2de414881f08d9a805f39dcfa33e");
+		assertEquals(false, actual);
+	}
+	
 	// TESTS FOR LENGTH 7-12-----------------------------------------------------------
 	@Test
 	void passwordLength6() {
@@ -134,42 +157,49 @@ Calendar blah;
 	}
 
 	// 	TESTS STRINGS MEET PASSWORD REQUIREMENTS
+	
 	@Test
 	void passwordIsAdmin() {
 		String password1 = "admin";
 		String password2 = "mod";
-		boolean pwd1 = PasswordValidation.doesPasswordMeetsPolicyReqs(password1);
-		boolean pwd2 = PasswordValidation.doesPasswordMeetsPolicyReqs(password2);
+		boolean pwd1 = PasswordValidation.doesPasswordMeetPolicyReqs(password1);
+		boolean pwd2 = PasswordValidation.doesPasswordMeetPolicyReqs(password2);
 		assertEquals(true, (pwd1 && pwd2));
 	}
 	
 	@Test
 	void normalAcceptablePassword() {
 		String password = "pAsswOrd4";
-		boolean actual = PasswordValidation.doesPasswordMeetsPolicyReqs(password);
+		boolean actual = PasswordValidation.doesPasswordMeetPolicyReqs(password);
 		assertEquals(true, actual);
 	}
 
 	@Test
 	void passwordTooLong() {
 		String password = "pAsswOrd4xxxxxxxxxxx";
-		boolean actual = PasswordValidation.doesPasswordMeetsPolicyReqs(password);
+		boolean actual = PasswordValidation.doesPasswordMeetPolicyReqs(password);
 		assertEquals(false, actual);
 	}
 	
 	@Test
 	void passwordTooShort() {
 		String password = "pAOrd4";
-		boolean actual = PasswordValidation.doesPasswordMeetsPolicyReqs(password);
+		boolean actual = PasswordValidation.doesPasswordMeetPolicyReqs(password);
 		assertEquals(false, actual);
 	}
-
+	
+	@Test
 	void isTuesdayHasTaco() {
-		when(PasswordValidation.mustContainTaco()).thenReturn(true);
-		String password = "tAc04aaa";
-		boolean actual = PasswordValidation.doesPasswordMeetsPolicyReqs(password);
-		assertEquals(true, actual);
+		String password = "taco1234";
+		boolean actual = PasswordValidation.isTuesdayButDoesntHaveTaco(2, password);
+		assertEquals(false, actual);
 	}
 	
+	@Test
+	void isTuesdayButThereIsNoTaco() {
+		String password = "password1234";
+		boolean actual = PasswordValidation.isTuesdayButDoesntHaveTaco(3, password);
+		assertEquals(true, actual);
+	}
 }
 
